@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\TriantaWeb.API.props" />
+</Project>
