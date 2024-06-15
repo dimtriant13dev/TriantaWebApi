@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Query;
@@ -12,6 +13,7 @@ namespace TriantaWeb.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class WalksController : ControllerBase
     {
         private readonly IMapper mapper;
@@ -39,9 +41,9 @@ namespace TriantaWeb.API.Controllers
         //GET /api/walks?filterOn=Name
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] string? filterOn, [FromQuery] string? filterQuery ,
-            [FromQuery] string? sortBy, [FromQuery] bool? IsAscending )
+            [FromQuery] string? sortBy, [FromQuery] bool? IsAscending , [FromQuery] int pageNumber = 1 , [FromQuery] int pageSize = 1000)
         {
-            var walksDomainModel = await walkRepository.GetAllAsync(filterOn,filterQuery,sortBy,IsAscending);
+            var walksDomainModel = await walkRepository.GetAllAsync(filterOn, filterQuery, sortBy, IsAscending ?? true ,pageNumber,pageSize);
             
             return Ok(mapper.Map<List<WalkDto>>(walksDomainModel));
         }

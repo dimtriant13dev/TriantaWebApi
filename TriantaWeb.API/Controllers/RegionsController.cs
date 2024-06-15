@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +11,7 @@ using TriantaWeb.API.Repositories;
 
 namespace TriantaWeb.API.Controllers
 {
-    // https://localhost:1234/api/regions
+    //https://localhost:1234/api/regions
     [Route("api/[controller]")]
     [ApiController]
     public class RegionsController : ControllerBase
@@ -27,6 +28,7 @@ namespace TriantaWeb.API.Controllers
         }
         //Get all
         [HttpGet]
+        [Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetAll()
         {
             var regionsDomain = await regionRepository.GetAllAsync();
@@ -51,6 +53,8 @@ namespace TriantaWeb.API.Controllers
 
         [HttpGet]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Reader")]
+
         public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
             //Get Data From Models
@@ -67,6 +71,7 @@ namespace TriantaWeb.API.Controllers
 
         [HttpPost]
         [ValidateModel]
+        [Authorize(Roles = "Writer")]
 
         public async Task<IActionResult> Create([FromBody] AddRegionRequestDto addRegionRequestDto)
         {
@@ -104,6 +109,8 @@ namespace TriantaWeb.API.Controllers
         [HttpPut]
         [Route("{id:Guid}")]
         [ValidateModel]
+        [Authorize(Roles = "Writer")]
+
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
         {
             //var regionDomainModel  = await dbContext.Regions.FirstOrDefaultAsync(x=>x.Id == id);
@@ -139,6 +146,8 @@ namespace TriantaWeb.API.Controllers
         }
         [HttpDelete]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Writere,Reader")]
+
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             //var regionDomainModel = await dbContext.Regions.FirstOrDefaultAsync(x => x.Id == id);
