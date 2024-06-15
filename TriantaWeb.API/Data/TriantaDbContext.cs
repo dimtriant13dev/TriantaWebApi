@@ -6,7 +6,7 @@ namespace TriantaWeb.API.Data
     public class TriantaDbContext : DbContext
     {
         //DbContext communicates with the database.
-        public TriantaDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
+        public TriantaDbContext(DbContextOptions<TriantaDbContext> dbContextOptions) : base(dbContextOptions)
         {
             
         }

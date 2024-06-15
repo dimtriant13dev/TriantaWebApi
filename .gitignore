@@ -233,3 +233,5 @@ obj/
 TriantaWeb.API/bin
 TriantaWeb.API/obj
 .vs
+TriantaWeb.API/bin
+TriantaWeb.API/obj
