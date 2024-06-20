@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TriantaWeb.API.Data;
 
@@ -11,9 +12,11 @@ using TriantaWeb.API.Data;
 namespace TriantaWeb.API.Migrations
 {
     [DbContext(typeof(TriantaDbContext))]
-    partial class TriantaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240620185500_Adding Images Table")]
+    partial class AddingImagesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,17 +42,17 @@ namespace TriantaWeb.API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ecdfaefa-765b-42c6-831e-f49e15268061"),
+                            Id = new Guid("c9f84790-9b6c-4fc0-afff-cebe0aeef909"),
                             Name = "Easy"
                         },
                         new
                         {
-                            Id = new Guid("86e2caef-2fc6-428d-8f0d-c780a164f071"),
+                            Id = new Guid("15ea7d57-6a47-4577-ab93-9a41c223e98e"),
                             Name = "Medium"
                         },
                         new
                         {
-                            Id = new Guid("d6274d92-93a9-40ff-b6af-e3576d02fda5"),
+                            Id = new Guid("4f4e329e-858e-4606-a2b4-b2d0ac297269"),
                             Name = "Hard"
                         });
                 });
@@ -107,19 +110,19 @@ namespace TriantaWeb.API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2386e995-94bd-4e2f-88bf-0dc8f387b98b"),
+                            Id = new Guid("6f9f0369-6a9b-42ab-a9d8-00c22d63f29d"),
                             Code = "ACK",
                             Name = "ACKLAND"
                         },
                         new
                         {
-                            Id = new Guid("ec169bf2-38de-4f60-bb1e-08fd8651eb29"),
+                            Id = new Guid("82db451d-d227-43fd-ba7f-61636bbc4b57"),
                             Code = "EK",
                             Name = "EKLAND"
                         },
                         new
                         {
-                            Id = new Guid("bddff020-f140-40c9-95f2-002cf59e1f88"),
+                            Id = new Guid("d3f4b7ad-ca16-487d-93c9-128fda20b7a9"),
                             Code = "AML",
                             Name = "AMLAND"
                         });
