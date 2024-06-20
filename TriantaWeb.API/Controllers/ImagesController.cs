@@ -16,7 +16,7 @@ namespace TriantaWeb.API.Controllers
         {
             this.imageRepository = imageRepository;
         }
-        //POST: /api/Images/Upload
+        //POST: //api/Images/Upload
         [HttpPost]
         [Route("Upload")]
         public async Task<IActionResult> Upload([FromForm] ImageUploadRequestDto imageUploadRequestDto)
