@@ -31,7 +31,7 @@ namespace TriantaWeb.API.Controllers
                     File = imageUploadRequestDto.File,
                     FileExtension = Path.GetExtension(imageUploadRequestDto.FileName),
                     FileSizeInBytes = imageUploadRequestDto.File.Length,
-                    FileName = imageUploadRequestDto.FileName,
+                    FileName = imageUploadRequestDto.File.FileName,
                     FileDesctiption = imageUploadRequestDto.FileDescription
                 };
 
@@ -49,7 +49,7 @@ namespace TriantaWeb.API.Controllers
         {
             var allowedExtensions = new string[] { ".jpg", ".jpeg", ".png" };
 
-            if(!allowedExtensions.Contains(Path.GetExtension(imageUploadRequestDto.FileName))) 
+            if(!allowedExtensions.Contains(Path.GetExtension(imageUploadRequestDto.File.FileName))) 
             {
                 ModelState.AddModelError("File", "Unsupported file extension");
             }
