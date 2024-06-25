@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 using TriantaWeb.API.CustomActionFilters;
 using TriantaWeb.API.Data;
 using TriantaWeb.API.Models.Domain;
@@ -19,36 +20,50 @@ namespace TriantaWeb.API.Controllers
         private readonly TriantaDbContext dbContext;
         private readonly IRegionRepository regionRepository;
         private readonly IMapper mapper;
+        private readonly ILogger<RegionsController> logger;
 
-        public RegionsController(TriantaDbContext dbContext , IRegionRepository regionRepository , IMapper mapper)
+        public RegionsController(TriantaDbContext dbContext , IRegionRepository regionRepository , IMapper mapper , ILogger<RegionsController> logger)
         {
             this.dbContext = dbContext;
             this.regionRepository = regionRepository;
             this.mapper = mapper;
+            this.logger = logger;
         }
         //Get all
         [HttpGet]
-        [Authorize(Roles = "Reader")]
+        //[Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetAll()
         {
-            var regionsDomain = await regionRepository.GetAllAsync();
-            //var regionDto = new List<RegionDto>();
-            ////Map Domain Models to DTO
+            try
+            {
+                throw new Exception("This is custom exception");
 
-            //foreach (var regionDomain in regionsDomain)
-            //{
-            //    regionDto.Add(new RegionDto()
-            //    {
-            //        Id = regionDomain.Id,
-            //        Code = regionDomain.Code,
-            //        Name = regionDomain.Name,
-            //        RegionImageUrl = regionDomain.RegionImageUrl,
-            //    });
-            //}
+                var regionsDomain = await regionRepository.GetAllAsync();
+                //var regionDto = new List<RegionDto>();
+                ////Map Domain Models to DTO
 
-            var regionsDto = mapper.Map<List<RegionDto>>(regionsDomain);
+                //foreach (var regionDomain in regionsDomain)
+                //{
+                //    regionDto.Add(new RegionDto()
+                //    {
+                //        Id = regionDomain.Id,
+                //        Code = regionDomain.Code,
+                //        Name = regionDomain.Name,
+                //        RegionImageUrl = regionDomain.RegionImageUrl,
+                //    });
+                //}
+
+                var regionsDto = mapper.Map<List<RegionDto>>(regionsDomain);
+                logger.LogInformation($@"Finished GetAllRegions request with data : {JsonSerializer.Serialize(regionsDomain)}");
+
+                return Ok(regionsDto);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, ex.Message);
+                throw ;
+            }
             
-            return Ok(regionsDto);
         }
 
         [HttpGet]

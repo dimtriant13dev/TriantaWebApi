@@ -8,10 +8,24 @@ using TriantaWeb.API.Mappings;
 using TriantaWeb.API.Repositories;
 using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.FileProviders;
+using Serilog;
+using TriantaWeb.API.MiddleWare;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+var logger = new LoggerConfiguration()
+    .WriteTo.File("Logs/TriantaLog.txt",rollingInterval: RollingInterval.Minute)
+    .WriteTo.Console()
+    .MinimumLevel
+    .Warning()
+    .CreateLogger();
+
+builder.Logging.ClearProviders();
+
+builder.Logging.AddSerilog(logger);
+
 
 builder.Services.AddControllers();
 builder.Services.AddHttpContextAccessor();
@@ -96,6 +110,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
+app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.UseHttpsRedirection();
 
 app.UseAuthentication();

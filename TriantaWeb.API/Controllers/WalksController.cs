@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.IdentityModel.Tokens;
+using System.Net;
 using TriantaWeb.API.CustomActionFilters;
 using TriantaWeb.API.Models.Domain;
 using TriantaWeb.API.Models.DTO;
@@ -43,9 +44,23 @@ namespace TriantaWeb.API.Controllers
         public async Task<IActionResult> GetAll([FromQuery] string? filterOn, [FromQuery] string? filterQuery ,
             [FromQuery] string? sortBy, [FromQuery] bool? IsAscending , [FromQuery] int pageNumber = 1 , [FromQuery] int pageSize = 1000)
         {
-            var walksDomainModel = await walkRepository.GetAllAsync(filterOn, filterQuery, sortBy, IsAscending ?? true ,pageNumber,pageSize);
-            
-            return Ok(mapper.Map<List<WalkDto>>(walksDomainModel));
+
+           // try
+           // {
+
+                throw new Exception("This is a custom exception");
+
+                var walksDomainModel = await walkRepository.GetAllAsync(filterOn, filterQuery, sortBy, IsAscending ?? true, pageNumber, pageSize);
+
+                return Ok(mapper.Map<List<WalkDto>>(walksDomainModel));
+           // }
+            //catch (Exception)
+            //{
+            //    //Logging exception
+
+            //    return Problem("Something went wrong", null, (int)HttpStatusCode.InternalServerError);
+            //}
+
         }
 
         //Get walk by id
